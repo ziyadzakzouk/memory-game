@@ -1,7 +1,7 @@
-#ifndef Game_H
-#define Game_H
-#include "deck\Deck.h"
-#include "player\Player.h"
+#ifndef Game_h
+#define Game_h
+#include "..\deck\Deck.h"
+#include "..\player\Player.h"
 
 
 class Game 

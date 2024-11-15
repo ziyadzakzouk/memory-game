@@ -1,6 +1,6 @@
 #ifndef Deck_H
 #define Deck_H
-#include "cards/Card.h"
+#include "..\cards\Card.h"
 
 class Deck 
 {

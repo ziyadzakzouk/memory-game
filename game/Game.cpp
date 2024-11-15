@@ -6,7 +6,7 @@ Game::Game(){
     deck = new Deck;
 }
 
-Game::Game(Deck* deck,Player* player1,Player* player2){
+Game::Game(Deck* deck, Player* player1, Player* player2){
     this->deck = deck;
     this->player1 = player1;
     this->player2 = player2;

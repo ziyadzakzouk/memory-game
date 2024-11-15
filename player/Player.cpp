@@ -1,4 +1,6 @@
 #include "Player.h"
+#include <iostream>
+using namespace std;
 
 Player::Player() {
     name = "none";
@@ -28,4 +30,8 @@ void Player::setName(string name){
 
 string Player::getName(){
     return name;
+}
+
+void Player::displayScore(){
+    cout << "Player Name: " << name << ", Score: " << score << endl;
 }
