@@ -1,6 +1,8 @@
 #include "deck/Deck.h"
 #include <ctime>
 #include <random>
+#include <iostream>
+using namespace std;
 
 Deck::Deck(){
 cards = new Card*[4];
@@ -58,6 +60,7 @@ void Deck::displayGrid(){
         cards[i][j].display();
        
     }
+    cout << endl;
     
     
 }
