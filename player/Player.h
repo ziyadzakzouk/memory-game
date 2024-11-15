@@ -10,8 +10,13 @@ string name;
 int score;
 public:
     Player();
+    Player(string n, int score);
     ~Player();
     void displayScore();
+    int getScore();
+    void setScore(int score);
+    void setName(string name);
+    string getName();
 };
 
 
