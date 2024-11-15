@@ -7,6 +7,8 @@ class StandardCard : public Card
 
 public:
     StandardCard();
+
+    StandardCard(int num , int points);
     ~StandardCard();
 };
 

@@ -12,6 +12,7 @@ public:
     ~BonusCard();
     void setBonusPoints(int points);
     int getBonusPoints();
+    
 };
 
 

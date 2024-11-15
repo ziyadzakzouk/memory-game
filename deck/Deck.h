@@ -4,10 +4,12 @@
 
 class Deck 
 {
- public:   
+ private:   
  Card** cards;
 public:
     Deck();
+    ~Deck();
+    Deck(Card** deck);
     void shuffle();
     void displayGrid();
 };
