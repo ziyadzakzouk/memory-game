@@ -1,5 +1,5 @@
-#ifndef _Game_
-#define _Game_
+#ifndef Game_H
+#define Game_H
 
 
 class Game 

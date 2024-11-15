@@ -1,5 +1,5 @@
-#ifndef _Player_
-#define _Player_
+#ifndef Player_H
+#define Player_H
 #include <string>
 using namespace std;
 

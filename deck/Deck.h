@@ -1,11 +1,11 @@
-#ifndef _Deck_
-#define _Deck_
+#ifndef Deck_H
+#define Deck_H
 #include "cards/Card.h"
 
 class Deck 
 {
  public:   
- Card cards[4][4];
+ Card** cards;
 public:
     Deck();
     void shuffle();

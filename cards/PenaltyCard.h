@@ -1,5 +1,5 @@
-#ifndef _PenaltyCard_
-#define _PenaltyCard_
+#ifndef PenaltyCard_H   
+#define PenaltyCard_H
 #include "Card.h"
 
 class PenaltyCard : public Card

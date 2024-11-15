@@ -1,5 +1,5 @@
-#ifndef _StandardCard_
-#define _StandardCard_
+#ifndef StandardCard_H
+#define StandardCard_H
 #include "Card.h"
 
 class StandardCard : public Card
