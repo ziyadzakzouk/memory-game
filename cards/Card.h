@@ -20,6 +20,9 @@ public:
     void Flip();    //if its true make it false and vice versa
     void setNumber(int num);
     virtual void setPoints(int points);
+    //added
+    void setflipped(bool f);
+
     
 
 };

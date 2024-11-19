@@ -4,8 +4,8 @@ BonusCard::BonusCard() {
     bonusPoints = 0;
 }
 
-BonusCard::BonusCard(int num,int point) : Card(num,point+bonusPoints) {
-
+BonusCard::BonusCard(int num,int point, int bonusPoints) : Card(num,point+bonusPoints) {
+this-> bonusPoints=bonusPoints;
 }
 
 BonusCard::~BonusCard() {

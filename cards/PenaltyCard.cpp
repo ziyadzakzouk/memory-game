@@ -4,8 +4,8 @@ PenaltyCard::PenaltyCard() {
     int deductionpoints = 0;
 }
 
-PenaltyCard::PenaltyCard(int num , int points) : Card(num, points - deductionPoints) {
-    
+PenaltyCard::PenaltyCard(int num , int points, int deductionPoints) : Card(num, points - deductionPoints) {
+    this-> deductionPoints=deductionPoints;
 }
 
 PenaltyCard::~PenaltyCard() {

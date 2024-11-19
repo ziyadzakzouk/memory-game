@@ -8,7 +8,7 @@ class BonusCard : public Card
     int bonusPoints;
 public:
     BonusCard();
-    BonusCard(int num,int point);
+    BonusCard(int num,int point, int bonusPoints);
     ~BonusCard();
     void setBonusPoints(int points);
     int getBonusPoints();

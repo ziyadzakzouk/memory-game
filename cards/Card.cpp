@@ -31,7 +31,11 @@ int Card::getNumber(){
 }
 
 void Card::setNumber(int num){
+    if(num<1 || num>6){
+        cout<<"number must be between 1 and 6";
+    }else{
     number = num;
+    }
 }
 
 void Card::Flip(){
@@ -48,4 +52,7 @@ int Card::getPoints(){
 
 void Card::setPoints(int points){
     this->points = points;
+}
+void Card::setflipped(bool f){
+    flipped=f;
 }

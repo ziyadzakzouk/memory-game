@@ -3,8 +3,8 @@
 using namespace std;
 
 Player::Player() {
-    name = "none";
-    score = 0;
+    name;
+    score;
    
 }
 
