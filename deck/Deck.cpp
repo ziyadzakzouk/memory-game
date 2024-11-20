@@ -20,9 +20,7 @@ for (int i = 0; i < 4; i++)
     for (int j = 0; j < 4; j++)
     {
         cards[i][j] = deck[i][j];
-    }
-    
-    
+    } 
 }
 
 }
@@ -31,7 +29,6 @@ Deck::~Deck(){
 for (int i = 0; i < 4; i++){
         delete[] cards[i];
 }
-delete[] cards;
 }
 
 void Deck::shuffle(){
