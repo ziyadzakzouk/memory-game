@@ -12,7 +12,7 @@ for (int i = 0; i < 4; i++)
 }
 
 }
-//------------NOT SURE ABOUT THIS -----------------------------------------------------------------
+
 Deck::Deck(Card** deck) {
 
 for (int i = 0; i < 4; i++)
@@ -24,7 +24,7 @@ for (int i = 0; i < 4; i++)
 }
 
 }
-//-------------------------------------------------------------------------------------
+
 Deck::~Deck(){
 for (int i = 0; i < 4; i++){
         delete[] cards[i];
@@ -43,10 +43,10 @@ for (int i = 0; i < 4; i++)
         Card temp = cards[randRow][randCol];
         cards[randRow][randCol] = cards[i][j];
         cards[i][j] = temp;
-       
+
     }
-    
-    
+
+
 }
 
 }
