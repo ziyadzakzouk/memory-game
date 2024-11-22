@@ -19,9 +19,9 @@ Card::~Card(){
 }
 
 void Card::display(){
-    if(!flipped){
+    if(flipped){
     cout<<number;
-//    flipped!=flipped;
+
     }
     else
     cout<<"*";
