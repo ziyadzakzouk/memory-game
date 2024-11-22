@@ -2,6 +2,8 @@
 #include <ctime>
 #include <random>
 #include <iostream>
+#include <algorithm>
+
 using namespace std;
 
 Deck::Deck(){
@@ -32,22 +34,23 @@ for (int i = 0; i < 4; i++){
 }
 
 void Deck::shuffle(){
-srand ((unsigned int) time(0));
-for (int i = 0; i < 4; i++)
-{
-    for (int j = 0; j < 4; j++)
-    {
-        int randRow = rand() % 4;
-        int randCol = rand() % 4;
 
-        Card temp = cards[randRow][randCol];
-        cards[randRow][randCol] = cards[i][j];
-        cards[i][j] = temp;
-
+    Card cardPairs[16];
+    for (int i = 0; i < 8; ++i) {
+        Card card;
+        card.setNumber(i);
+        cardPairs[2 * i] = card;
+        cardPairs[2 * i + 1] = card;
     }
-
-
-}
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(cardPairs, cardPairs + 16, g);
+    int index = 0;
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            cards[i][j] = cardPairs[index++];
+        }
+    }
 
 }
 

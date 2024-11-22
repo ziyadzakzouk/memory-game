@@ -33,11 +33,7 @@ int Card::getNumber(){
 }
 
 void Card::setNumber(int num){
-    if(num<1 || num>6){
-        cout<<"number must be between 1 and 6";
-    }else{
-    number = num;
-    }
+    number=num;
 }
 
 void Card::Flip(){
