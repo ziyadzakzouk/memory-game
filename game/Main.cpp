@@ -146,7 +146,7 @@ delete[] cards;
 void Deck::shuffle(){
 
     Card cardPairs[16];
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 5; ++i) {
         Card card;
         card.setNumber(i);
         cardPairs[2 * i] = card;
