@@ -42,8 +42,8 @@ void Deck::shuffle(){
         cardPairs[2 * i] = card;
         cardPairs[2 * i + 1] = card;
     }
-    std::random_device rd;
-    std::mt19937 g(rd());
+    random_device rd;
+    mt19937 g(rd());
     std::shuffle(cardPairs, cardPairs + 16, g);
     int index = 0;
     for (int i = 0; i < 4; ++i) {
