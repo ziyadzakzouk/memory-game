@@ -237,12 +237,16 @@ Game::~Game(){
 }
 
 void Game::initializeGame(){
+    string x;
+    string y;
+    cout<<"enter player 1 name: ";cin>>x;
+    player1->setName(x);
+    cout<<"enter player 2 name: ";cin>>y;
+    player2->setName(y);
     cout << "Welcome to Memory Game " << endl;
     cout << "Let the Game Begins DING DING DING" << endl;
     deck->shuffle();
     deck->displayGrid();
-    player1->setName("Joe");
-    player2->setName("Monafes");
     player1->setScore(0);
     player2->setScore(0);
     cout << "Player 1: " << player1->getName() << "-----------------VS------------------" << "Player 2: " << player2->getName() << endl;
