@@ -177,6 +177,13 @@ void Deck::displayGrid(){
 }
 }
 
+Card** Deck::getCards(){
+    return cards;
+}
+void Deck::setCards(Card** cards){
+        this->cards = cards;
+}
+
 Player::Player() {
     name;
     score;
@@ -208,7 +215,7 @@ string Player::getName(){
 }
 
 void Player::displayScore(){
-    cout << "Player Name: " << name << ", Score: " << score << endl;
+    cout << "Score: " << score;
 }
 
 Game::Game(){
@@ -239,7 +246,7 @@ void Game::initializeGame(){
     player1->setScore(0);
     player2->setScore(0);
     cout << "Player 1: " << player1->getName() << "-----------------VS------------------" << "Player 2: " << player2->getName() << endl;
-    cout <<  player1->getScore() << "___________________________________________________" << player2->getScore() << endl;
+    player1->displayScore(); cout<< "___________________________________________________" ; player2->displayScore();
 
 
 }

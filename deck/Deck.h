@@ -12,6 +12,8 @@ public:
     Deck(Card** deck);
     void shuffle();
     void displayGrid();
+    Card** getCards();
+    void setCards(Card** cards);
 };
 
 
