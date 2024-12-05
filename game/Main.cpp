@@ -278,6 +278,18 @@ Player* Game::getPlayer1(){
 Player* Game::getPlayer2(){
     return player2;
 }
+void Game::EndGame() {
+    cout << "Game Over!\n";
+    if (player1->getScore() > player2->getScore()) {
+        cout << "Winner: " << player1->getName() << endl;
+    }
+    else if (player1->getScore() < player2->getScore()) {
+        cout << "Winner: " << player2->getName() << endl;
+    }
+    else {
+        cout << "It's a tie!\n";
+    }
+}
 
 int main() {
     Game game;
