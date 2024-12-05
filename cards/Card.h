@@ -20,8 +20,11 @@ public:
     void Flip();    //if its true make it false and vice versa
     void setNumber(int num);
     virtual void setPoints(int points);
-    //added
+
     void setflipped(bool f);
+
+    void reveal();//new function added to reveal the choosen card
+    void hide();//new function added to hide the choosen card if the cards are not matched
 
     
 

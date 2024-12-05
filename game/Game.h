@@ -22,6 +22,11 @@ public:
     void setPlayer2(Player* player2);
     Player* getPlayer1();
     Player* getPlayer2();
+    void PlayerTurn(Player* player); //detects the player's turn
+    void handleCards(Player* player,Card* card1, Card* card2); //handles the cards
+    void EndGame(); //displays the winner
+    void handleBounsCard(Player* player,Card* card1,Card* card2); //handles the bonus card
+
 
 };
 

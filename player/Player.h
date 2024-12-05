@@ -17,6 +17,7 @@ public:
     void setScore(int score);
     void setName(string name);
     string getName();
+    //player score should be changed according to the card points bonus or penalty and chooice manner is important.....
 };
 
 
