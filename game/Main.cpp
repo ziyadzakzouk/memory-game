@@ -329,7 +329,7 @@ void Game::handleCards(Player *player, Card *card1, Card *card2) {
             player = player1;
         }
     }
-    player->displayScore();
+
 }
 
 Deck* Game::getDeck(){
