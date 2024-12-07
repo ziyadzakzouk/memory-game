@@ -235,7 +235,6 @@ Game::~Game(){
     delete player2;
     delete deck;
 }
-
 void Game::initializeGame(){
     string x;
     string y;
