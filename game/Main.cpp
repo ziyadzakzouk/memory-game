@@ -266,6 +266,16 @@ void Game::setPlayer1(Player* player){
 void Game::setPlayer2(Player* player){
     this->player2 = player2;
 }
+bool Game::allCardsFlipped() {
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (deck->getCards()[i][j].isFlipped()== false) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
 void Game::PlayerTurn(Player *player) {
     int x1, y1, x2, y2;
     cout << player->getName() << " turn" << endl;
@@ -278,6 +288,10 @@ void Game::PlayerTurn(Player *player) {
     deck->getCards()[x2][y2].reveal();
     deck->displayGrid();
     handleCards(player, &deck->getCards()[x1][y1], &deck->getCards()[x2][y2]);
+    if(allCardsFlipped()){
+        EndGame();
+    }
+
 }
 Deck* Game::getDeck(){
     return deck;
