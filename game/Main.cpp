@@ -316,8 +316,8 @@ void Game::PlayerTurn(Player *player) {
 void Game::handleCards(Player *player, Card *card1, Card *card2) {
     if (card1->getNumber() == card2->getNumber()) {
         cout << "Cards Matched!" << endl;
-        player->setScore(player->getScore() + card1->getPoints());
-    }
+        player->setScore(player->getScore() + card1->getPoints()); //according to the card points bonus or penalty and chooice manner is important.....
+    }        //we can decide for line 319 to handle all of the cars instead of creating diffrent cards
     else {
         cout << "Cards did not match!" << endl;
         card1->hide();
