@@ -302,8 +302,36 @@ void Game::PlayerTurn(Player *player) {
     if(allCardsFlipped()){
         EndGame();
     }
+    else{
+        if(player == player1){
+            PlayerTurn(player2);
+        }
+        else{
+            PlayerTurn(player1);
+        }
+    }
 
 }
+
+void Game::handleCards(Player *player, Card *card1, Card *card2) {
+    if (card1->getNumber() == card2->getNumber()) {
+        cout << "Cards Matched!" << endl;
+        player->setScore(player->getScore() + card1->getPoints());
+    }
+    else {
+        cout << "Cards did not match!" << endl;
+        card1->hide();
+        card2->hide();
+        if(player == player1){
+            player = player2;
+        }
+        else{
+            player = player1;
+        }
+    }
+    player->displayScore();
+}
+
 Deck* Game::getDeck(){
     return deck;
 }
