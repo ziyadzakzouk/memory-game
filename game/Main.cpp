@@ -347,9 +347,11 @@ void Game::EndGame() {
     cout << "Game Over!\n";
     if (player1->getScore() > player2->getScore()) {
         cout << "Winner: " << player1->getName() << endl;
+        cout << "Score: " << player1->getScore() << "Loser Score: " << player2->getScore() << endl;
     }
     else if (player1->getScore() < player2->getScore()) {
         cout << "Winner: " << player2->getName() << endl;
+        cout << "Score: " << player2->getScore() << "Loser Score: " << player1->getScore() << endl;
     }
     else {
         cout << "It's a tie!\n";
