@@ -278,13 +278,24 @@ bool Game::allCardsFlipped() {
 }
 void Game::PlayerTurn(Player *player) {
     int x1, y1, x2, y2;
-    cout << player->getName() << " turn" << endl;
-    cout << "Enter the first card using X and Y coordinates: ";
-    cin >> x1 >> y1;
+    // First card selection
+    do {
+        cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
+        cin >> x1 >> y1;
+        if (deck->getCards()[x1][y1].isFlipped()) {
+            cout << "Card already flipped. Choose another card." << endl;
+        }
+    } while (deck->getCards()[x1][y1].isFlipped());
     deck->getCards()[x1][y1].reveal();
     deck->displayGrid();
-    cout << "Enter the second card using X and Y coordinates: ";
-    cin >> x2 >> y2;
+    // First card selection
+    do {
+        cout << player->getName() << "'s turn. Enter coordinates of the Second card (row (X) and column (Y) ): ";
+        cin >> x2 >> y2;
+        if (deck->getCards()[x2][y2].isFlipped()) {
+            cout << "Card already flipped. Choose another card." << endl;
+        }
+    } while (deck->getCards()[x2][y2].isFlipped());
     deck->getCards()[x2][y2].reveal();
     deck->displayGrid();
     handleCards(player, &deck->getCards()[x1][y1], &deck->getCards()[x2][y2]);
