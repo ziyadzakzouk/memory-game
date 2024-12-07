@@ -5,6 +5,12 @@
 #include "..\cards\BonusCard.h"
 #include "..\cards\PenaltyCard.h"
 #include "..\cards\StandardCard.h"
+#include <ctime>
+#include <random>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
 
 Card::Card(){
     number = 0;
@@ -108,12 +114,7 @@ StandardCard::~StandardCard() {
     
 }
 
-#include <ctime>
-#include <random>
-#include <iostream>
-#include <algorithm>
 
-using namespace std;
 
 Deck::Deck(){
 cards = new Card*[4];
@@ -265,7 +266,19 @@ void Game::setPlayer1(Player* player){
 void Game::setPlayer2(Player* player){
     this->player2 = player2;
 }
-
+void Game::PlayerTurn(Player *player) {
+    int x1, y1, x2, y2;
+    cout << player->getName() << " turn" << endl;
+    cout << "Enter the first card using X and Y coordinates: ";
+    cin >> x1 >> y1;
+    deck->getCards()[x1][y1].reveal();
+    deck->displayGrid();
+    cout << "Enter the second card using X and Y coordinates: ";
+    cin >> x2 >> y2;
+    deck->getCards()[x2][y2].reveal();
+    deck->displayGrid();
+    handleCards(player, &deck->getCards()[x1][y1], &deck->getCards()[x2][y2]);
+}
 Deck* Game::getDeck(){
     return deck;
 }
