@@ -313,23 +313,94 @@ void Game::PlayerTurn(Player *player) {
 
 }
 
-void Game::handleCards(Player *player, Card *card1, Card *card2) {
-    if (card1->getNumber() == card2->getNumber()) {
-        cout << "Cards Matched!" << endl;
-        player->setScore(player->getScore() + card1->getPoints()); //according to the card points bonus or penalty and chooice manner is important.....
-    }        //we can decide for line 319 to handle all of the cars instead of creating diffrent cards
-    else {
-        cout << "Cards did not match!" << endl;
-        card1->hide();
-        card2->hide();
+void Game::handleCards(Player* player, Card* card1, Card* card2) {
+    if (card1->getNumber() == 7 && card2->getNumber() == 7) { //both are bonus cards
+
+        int tmp;
+        cout << "DING DING DING!!! both cards are Bonus Cards. Choose an option:\n";
+        cout << "1. Gain +2 points\n";
+        cout << "2. Gain +1 point and take another turn\n";
+        cin >> tmp;
+        if (tmp == 1) { //manner choice
+            player->setScore(player->getScore() + 2);
+        } else {
+            player->setScore(player->getScore() + 1);
+            if(player == player1){
+                PlayerTurn(player1);
+            }
+            else{
+                PlayerTurn(player2);
+            }
+        }
+        card1->setNumber(-1);
+        card2->setNumber(-1);
+    } else if (card1->getNumber() == 8 && card2->getNumber() == 8) { //both are penalty cards
+
+        int tmp;
+        cout << "OH NO !!  both cards are penalty cards. choose an option:\n";
+        cout << "1- Lose 2 points\n";
+        cout << "2- Lose 1 point and skip the next turn\n";
+        cin >> tmp;
+        if (tmp == 1) {
+            player->setScore(player->getScore() - 2);
+        } else {
+            player->setScore(player->getScore() - 1);
+
+            if(player == player1){
+                PlayerTurn(player2);
+            }
+            else{
+                PlayerTurn(player1);
+            }
+        }
+        card1->setNumber(-1);
+        card2->setNumber(-1);
+    } else if ((card1->getNumber() == 7 && card2->getNumber() != 8) || (card2->getNumber() == 7 && card1->getNumber() != 8)) { //one is bonus card and the other is standard card
+
+        player->setScore(player->getScore() + 1);
+        if (card1->getNumber() == 7) {
+            card1->setNumber(-1);
+            card2->hide();
+        } else {
+            card2->setNumber(-1);
+            card1->hide();
+        }
+    } else if ((card1->getNumber() == 8 && card2->getNumber() != 7) || (card2->getNumber() == 8 && card1->getNumber() != 7)) {
+        // one card is a penalty card and the other is a standard card
+        player->setScore(player->getScore() - 1);
+        if (card1->getNumber() == 8) {
+            card1->setNumber(-1);
+            card2->hide();
+        } else {
+            card2->setNumber(-1);
+            card1->hide();
+        }
+    } else if ((card1->getNumber() == 7 && card2->getNumber() == 8) || (card2->getNumber() == 7 && card1->getNumber() == 8)) {
+        // one card is a bonus card and the other is a penalty card
+        card1->setNumber(-1);
+        card2->setNumber(-1);
+    } else if (card1->getNumber() == card2->getNumber()) {
+       //both cards are standard cards and have the same number
+        player->setScore(player->getScore() + 1);
+        card1->setNumber(-1);
+        card2->setNumber(-1);
         if(player == player1){
-            player = player2;
+            PlayerTurn(player1);
         }
         else{
-            player = player1;
+            PlayerTurn(player2);
+        }
+    } else {
+
+        card1->hide();
+        card2->hide();
+        if (player == player1) {
+            PlayerTurn(player2);
+        } else {
+            PlayerTurn(player1);
         }
     }
-
+    player->displayScore();
 }
 
 Deck* Game::getDeck(){
