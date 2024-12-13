@@ -32,7 +32,7 @@ Card::~Card(){
 
 void Card::display(){
     if(flipped){
-    cout<<number;
+    cout<<number<<"";
 
     }
     else
@@ -176,9 +176,9 @@ void Deck::displayGrid(){
 {
     for (int j = 0; j < 4; j++)
     {
-      
+
         cards[i][j].display();
-       
+
     }
     cout << endl;
 }
@@ -308,71 +308,74 @@ void Game::PlayerTurn(Player *player) {
     do {
         cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
         cin >> x1 >> y1;
-        if (deck->getCards()[x1][y1].isFlipped()) {
+        if (deck->getCards()[y1][x1].isFlipped()) {
             cout << "Card already flipped. Choose another card." << endl;
         }
-    } while (deck->getCards()[x1][y1].isFlipped() &&(x1<=0 || x1>=3) && (y1<=0 || y1>=3));
-    deck->getCards()[x1][y1].reveal();  //reveal the card
+    } while (deck->getCards()[x1][y1].isFlipped() || x1 < 0 || x1 > 3 || y1 < 0 || y1 > 3);
+    deck->getCards()[y1][x1].reveal();  // reveal the card
     deck->displayGrid();
-    // First card selection
+
+    // Second card selection
     do {
-        cout << player->getName() << "'s turn. Enter coordinates of the Second card (row (X) and column (Y) ): ";
+        cout << player->getName() << "'s turn. Enter coordinates of the second card (row (X) and column (Y) ): ";
         cin >> x2 >> y2;
-        if (deck->getCards()[x2][y2].isFlipped()) {
+        if (deck->getCards()[y2][x2].isFlipped()) {
             cout << "Card already flipped. Choose another card." << endl;
         }
-    } while (deck->getCards()[x2][y2].isFlipped() && (x2<=0 || x2>=3) && (y2<=0 || y2>=3));
-    deck->getCards()[x2][y2].reveal();  //reveal
+    } while (deck->getCards()[y2][x2].isFlipped() || x2 < 0 || x2 > 3 || y2 < 0 || y2 > 3);
+    deck->getCards()[y2][x2].reveal();  // reveal the card
     deck->displayGrid();
-    handleCards(player, &deck->getCards()[x1][y1], &deck->getCards()[x2][y2]);
-    if(allCardsFlipped()){
+
+    handleCards(player, &deck->getCards()[y1][x1], &deck->getCards()[y2][x2]);
+    if (allCardsFlipped()) {
         EndGame();
-    }
-    else{
-        if(player == player1){
+    } else {
+        if (player == player1) {
             PlayerTurn(player2);
-        }
-        else{
+        } else {
             PlayerTurn(player1);
         }
     }
-
 }
 
 void Game::handleCards(Player* player, Card* card1, Card* card2) {
-
-    // Check if there is only one card left
-    if (allCardsFlipped()) {
-        card1->reveal();
-        player->displayScore();
-        EndGame();
-        return;
+    // Handle normal cards
+    if ((card1->getNumber() != 7 && card1->getNumber() != 8) && (card2->getNumber() != 7 && card2->getNumber() != 8)) {
+        if (card1->getNumber() == card2->getNumber()) {
+            card1->setNumber(-1);
+            card2->setNumber(-1);
+        } else {
+            card1->hide();
+            card2->hide();
+        }
     }
 
-    if (card1->getNumber() == 7 && card2->getNumber() == 7) { //both are bonus cards
-
+    // Handle bonus cards
+    if (card1->getNumber() == 7 && card2->getNumber() == 7) {
         int tmp;
         cout << "DING DING DING!!! both cards are Bonus Cards. Choose an option:\n";
         cout << "1. Gain +2 points\n";
         cout << "2. Gain +1 point and take another turn\n";
         cin >> tmp;
-        if (tmp == 1) { //manner choice
+
+        if (tmp == 1) {
             player->setScore(player->getScore() + 2);
         } else {
             player->setScore(player->getScore() + 1);
-            if(player == player1){
+            if (player == player1) {
                 PlayerTurn(player1);
-            }
-            else{
+            } else {
                 PlayerTurn(player2);
             }
         }
         card1->setNumber(-1);
         card2->setNumber(-1);
-    } else if (card1->getNumber() == 8 && card2->getNumber() == 8) { //both are penalty cards
+    }
 
+    // Handle penalty cards
+    if (card1->getNumber() == 8 && card2->getNumber() == 8) {
         int tmp;
-        cout << "OH NO !!  both cards are penalty cards. choose an option:\n";
+        cout << "OH NO !! both cards are penalty cards. choose an option:\n";
         cout << "1- Lose 2 points\n";
         cout << "2- Lose 1 point and skip the next turn\n";
         cin >> tmp;
@@ -380,18 +383,18 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
             player->setScore(player->getScore() - 2);
         } else {
             player->setScore(player->getScore() - 1);
-
-            if(player == player1){
+            if (player == player1) {
                 PlayerTurn(player2);
-            }
-            else{
+            } else {
                 PlayerTurn(player1);
             }
         }
         card1->setNumber(-1);
         card2->setNumber(-1);
-    } else if ((card1->getNumber() == 7 && card2->getNumber() != 8) || (card2->getNumber() == 7 && card1->getNumber() != 8)) { //one is bonus card and the other is standard card
+    }
 
+    // Handle mixed cards
+    if ((card1->getNumber() == 7 && card2->getNumber() != 8) || (card2->getNumber() == 7 && card1->getNumber() != 8)) {
         player->setScore(player->getScore() + 1);
         if (card1->getNumber() == 7) {
             card1->setNumber(-1);
@@ -401,7 +404,6 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
             card1->hide();
         }
     } else if ((card1->getNumber() == 8 && card2->getNumber() != 7) || (card2->getNumber() == 8 && card1->getNumber() != 7)) {
-        // one card is a penalty card and the other is a standard card
         player->setScore(player->getScore() - 1);
         if (card1->getNumber() == 8) {
             card1->setNumber(-1);
@@ -411,30 +413,10 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
             card1->hide();
         }
     } else if ((card1->getNumber() == 7 && card2->getNumber() == 8) || (card2->getNumber() == 7 && card1->getNumber() == 8)) {
-        // one card is a bonus card and the other is a penalty card
         card1->setNumber(-1);
         card2->setNumber(-1);
-    } else if (card1->getNumber() == card2->getNumber()) {
-       //both cards are standard cards and have the same number
-        player->setScore(player->getScore() + 1);
-        card1->setNumber(-1);
-        card2->setNumber(-1);
-        if(player == player1){
-            PlayerTurn(player1);
-        }
-        else{
-            PlayerTurn(player2);
-        }
-    } else {
-
-        card1->hide();
-        card2->hide();
-        if (player == player1) {
-            PlayerTurn(player2);
-        } else {
-            PlayerTurn(player1);
-        }
     }
+
     player->displayScore();
 }
 
