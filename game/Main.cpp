@@ -250,15 +250,35 @@ void Game::initializeGame(){
     cout<<"enter player 2 name: ";cin>>y;
     player2->setName(y);
     cout << "Welcome to Memory Game " << endl;
-    cout << "Let the Game Begins DING DING DING" << endl;
+    cout<<"Instructions: \n";
+    cout<<"1. The game consists of 16 cards, 8 pairs of cards.\n";
+    cout<<"2. Each card has a number from 0 to 7.\n";
+    cout<<"3. The player with the highest score wins the game.\n";
+    cout<<"4. If the two cards have the same number, the player gets 1 point.\n";
+    cout<<"5. If the two cards have different numbers, the player loses 1 point.\n";
+    cout<<"6. If the two cards are bonus cards, the player gets 2 points or get 1 point with 2 rounds it depends on your choice.\n";
+    cout<<"7. If the two cards are penalty cards, the player loses 2 points or lose 1 point and skip a round it depends on your choice.\n";
+    cout<<"8. If one card is a bonus card and the other is a standard card, the player gets 1 point.\n";
+    cout<<"9. If one card is a penalty card and the other is a standard card, the player loses 1 point.\n";
+    cout<<"10. If one card is a bonus card and the other is a penalty card, the cards are removed from the grid.\n";
+    cout<<"you will choose from x and y coordinates to flip the card and match the pairs .\n";
+    cout<<"Note x and y will be zero to get the first element in row and column\n";
+    cout<<"Note x and y will be 3 to get the last element in row and column\n";
+    cout << "DING DING DING Let the Game Begins " << endl;
     deck->shuffle();
     deck->displayGrid();
     player1->setScore(0);
     player2->setScore(0);
     cout << "Player 1: " << player1->getName() << "-----------------VS------------------" << "Player 2: " << player2->getName() << endl;
     player1->displayScore(); cout<< "___________________________________________________" ; player2->displayScore();
+    cout<<endl;
 
-
+// Start the game loop
+    while (!allCardsFlipped()) {
+        PlayerTurn(player1);
+        if (allCardsFlipped()) break;
+        PlayerTurn(player2);
+    }
 }
 
 void Game::setDeck(Deck* deck){
