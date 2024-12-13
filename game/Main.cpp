@@ -305,28 +305,36 @@ bool Game::allCardsFlipped() {
 void Game::PlayerTurn(Player *player) {
     int x1, y1, x2, y2;
     // First card selection
-    do {
-        cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
-        cin >> x1 >> y1;
-        if (deck->getCards()[y1][x1].isFlipped()) {
+    cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
+    cin >> x1 >> y1;
+    while (x1 < 1 || x1 > 4 || y1 < 1 || y1 > 4 || deck->getCards()[x1-1][y1-1].isFlipped()) {
+        if (x1 < 1 || x1 > 4 || y1 < 1 || y1 > 4) {
+            cout << "Coordinates out of bounds. Please enter valid coordinates." << endl;
+        } else if (deck->getCards()[x1-1][y1-1].isFlipped()) {
             cout << "Card already flipped. Choose another card." << endl;
         }
-    } while (deck->getCards()[x1][y1].isFlipped() || x1 < 0 || x1 > 3 || y1 < 0 || y1 > 3);
-    deck->getCards()[y1][x1].reveal();  // reveal the card
+        cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
+        cin >> x1 >> y1;
+    }
+    deck->getCards()[x1-1][y1-1].reveal();  // reveal the card
     deck->displayGrid();
 
     // Second card selection
-    do {
-        cout << player->getName() << "'s turn. Enter coordinates of the second card (row (X) and column (Y) ): ";
-        cin >> x2 >> y2;
-        if (deck->getCards()[y2][x2].isFlipped()) {
+    cout << player->getName() << "'s turn. Enter coordinates of the second card (row (X) and column (Y) ): ";
+    cin >> x2 >> y2;
+    while (x2 < 1 || x2 > 4 || y2 < 1 || y2 > 4 || deck->getCards()[x2-1][y2-1].isFlipped()) {
+        if (x2 < 1 || x2 > 4 || y2 < 1 || y2 > 4) {
+            cout << "Coordinates out of bounds. Please enter valid coordinates." << endl;
+        } else if (deck->getCards()[x2-1][y2-1].isFlipped()) {
             cout << "Card already flipped. Choose another card." << endl;
         }
-    } while (deck->getCards()[y2][x2].isFlipped() || x2 < 0 || x2 > 3 || y2 < 0 || y2 > 3);
-    deck->getCards()[y2][x2].reveal();  // reveal the card
+        cout << player->getName() << "'s turn. Enter coordinates of the second card (row (X) and column (Y) ): ";
+        cin >> x2 >> y2;
+    }
+    deck->getCards()[x2-1][y2-1].reveal();  // reveal the card
     deck->displayGrid();
 
-    handleCards(player, &deck->getCards()[y1][x1], &deck->getCards()[y2][x2]);
+    handleCards(player, &deck->getCards()[y1-1][x1-1], &deck->getCards()[x2-1][y2-1]);
     if (allCardsFlipped()) {
         EndGame();
     } else {
