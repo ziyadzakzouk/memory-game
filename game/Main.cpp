@@ -9,6 +9,7 @@
 #include <random>
 #include <iostream>
 #include <algorithm>
+#include <string>
 
 using namespace std;
 
@@ -54,7 +55,12 @@ void Card::Flip(){
 bool Card::isFlipped(){
     return flipped;
 }
-
+void Card::reveal(){
+    flipped = true;
+}
+void Card::hide(){
+    flipped = false;
+}
 int Card::getPoints(){
     return points;
 }
@@ -286,7 +292,7 @@ void Game::PlayerTurn(Player *player) {
             cout << "Card already flipped. Choose another card." << endl;
         }
     } while (deck->getCards()[x1][y1].isFlipped());
-    deck->getCards()[x1][y1].reveal();
+    deck->getCards()[x1][y1].reveal();  //reveal the card
     deck->displayGrid();
     // First card selection
     do {
@@ -296,7 +302,7 @@ void Game::PlayerTurn(Player *player) {
             cout << "Card already flipped. Choose another card." << endl;
         }
     } while (deck->getCards()[x2][y2].isFlipped());
-    deck->getCards()[x2][y2].reveal();
+    deck->getCards()[x2][y2].reveal();  //reveal
     deck->displayGrid();
     handleCards(player, &deck->getCards()[x1][y1], &deck->getCards()[x2][y2]);
     if(allCardsFlipped()){
