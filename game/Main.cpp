@@ -340,6 +340,15 @@ void Game::PlayerTurn(Player *player) {
 }
 
 void Game::handleCards(Player* player, Card* card1, Card* card2) {
+
+    // Check if there is only one card left
+    if (allCardsFlipped()) {
+        card1->reveal();
+        player->displayScore();
+        EndGame();
+        return;
+    }
+
     if (card1->getNumber() == 7 && card2->getNumber() == 7) { //both are bonus cards
 
         int tmp;
