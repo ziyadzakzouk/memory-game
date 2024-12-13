@@ -10,6 +10,7 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
+#include <thread>
 
 using namespace std;
 
@@ -236,7 +237,29 @@ Game::Game(Deck* deck, Player* player1, Player* player2){
     this->player1 = player1;
     this->player2 = player2;
 }
+void Game::revealAllCards() {
+    // Reveal all cards
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            deck->getCards()[i][j].reveal();
+        }
+    }
+    deck->displayGrid();
 
+    // Wait for any modified seconds
+    this_thread::sleep_for(chrono::seconds(3));
+
+    // Hide all cards
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            deck->getCards()[i][j].hide();
+        }
+    }
+    for (int i = 0; i <5 ; ++i) {
+        cout<<endl;
+    }
+    deck->displayGrid();
+}
 Game::~Game(){
     delete player1;
     delete player2;
@@ -266,6 +289,7 @@ void Game::initializeGame(){
     cout<<"Note x and y will be 3 to get the last element in row and column\n";
     cout << "DING DING DING Let the Game Begins " << endl;
     deck->shuffle();
+    revealAllCards();
     deck->displayGrid();
     player1->setScore(0);
     player2->setScore(0);
@@ -352,7 +376,8 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
         if (card1->getNumber() == card2->getNumber()) {
             card1->setNumber(-1);
             card2->setNumber(-1);
-        } else {
+        } else if(card1->getNumber() != card2->getNumber())
+        {
             card1->hide();
             card2->hide();
         }
@@ -427,7 +452,6 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
 
     player->displayScore();
 }
-
 Deck* Game::getDeck(){
     return deck;
 }
