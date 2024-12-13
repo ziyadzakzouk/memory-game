@@ -311,7 +311,7 @@ void Game::PlayerTurn(Player *player) {
         if (deck->getCards()[x1][y1].isFlipped()) {
             cout << "Card already flipped. Choose another card." << endl;
         }
-    } while (deck->getCards()[x1][y1].isFlipped());
+    } while (deck->getCards()[x1][y1].isFlipped() &&(x1<=0 || x1>=3) && (y1<=0 || y1>=3));
     deck->getCards()[x1][y1].reveal();  //reveal the card
     deck->displayGrid();
     // First card selection
@@ -321,7 +321,7 @@ void Game::PlayerTurn(Player *player) {
         if (deck->getCards()[x2][y2].isFlipped()) {
             cout << "Card already flipped. Choose another card." << endl;
         }
-    } while (deck->getCards()[x2][y2].isFlipped());
+    } while (deck->getCards()[x2][y2].isFlipped() && (x2<=0 || x2>=3) && (y2<=0 || y2>=3));
     deck->getCards()[x2][y2].reveal();  //reveal
     deck->displayGrid();
     handleCards(player, &deck->getCards()[x1][y1], &deck->getCards()[x2][y2]);
