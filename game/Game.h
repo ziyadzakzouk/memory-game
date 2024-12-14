@@ -27,7 +27,7 @@ public:
     bool allCardsFlipped();
     void EndGame(); //displays the winner
     void handleBounsCard(Player* player,Card* card1,Card* card2); //handles the bonus card
-
+    void revealAllCards();
 
 };
 

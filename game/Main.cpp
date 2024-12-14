@@ -154,11 +154,11 @@ delete[] cards;
 void Deck::shuffle(){
 
     Card cardPairs[16];
-    for (int i = 0; i < 7; ++i) {
+    for (int i = 1; i <= 8; ++i) {
         Card card;
         card.setNumber(i);
-        cardPairs[2 * i] = card;
-        cardPairs[2 * i + 1] = card;
+        cardPairs[2 * (i-1)] = card;
+        cardPairs[2 * (i-1) + 1] = card;
     }
     random_device rd;
     mt19937 g(rd());
@@ -223,7 +223,7 @@ string Player::getName(){
 }
 
 void Player::displayScore(){
-    cout << "Score: " << score;
+    cout << "Score: " << score<<" ";
 }
 
 Game::Game(){
@@ -285,24 +285,18 @@ void Game::initializeGame(){
     cout<<"9. If one card is a penalty card and the other is a standard card, the player loses 1 point.\n";
     cout<<"10. If one card is a bonus card and the other is a penalty card, the cards are removed from the grid.\n";
     cout<<"you will choose from x and y coordinates to flip the card and match the pairs .\n";
-    cout<<"Note x and y will be zero to get the first element in row and column\n";
-    cout<<"Note x and y will be 3 to get the last element in row and column\n";
+    cout<<"Note x and y will be 1 to get the first element in row and column\n";
+    cout<<"Note x and y will be 4 to get the last element in row and column\n";
     cout << "DING DING DING Let the Game Begins " << endl;
     deck->shuffle();
     revealAllCards();
-    deck->displayGrid();
     player1->setScore(0);
     player2->setScore(0);
     cout << "Player 1: " << player1->getName() << "-----------------VS------------------" << "Player 2: " << player2->getName() << endl;
     player1->displayScore(); cout<< "___________________________________________________" ; player2->displayScore();
     cout<<endl;
+    PlayerTurn(player1); 
 
-// Start the game loop
-    while (!allCardsFlipped()) {
-        PlayerTurn(player1);
-        if (allCardsFlipped()) break;
-        PlayerTurn(player2);
-    }
 }
 
 void Game::setDeck(Deck* deck){
@@ -358,7 +352,7 @@ void Game::PlayerTurn(Player *player) {
     deck->getCards()[x2-1][y2-1].reveal();  // reveal the card
     deck->displayGrid();
 
-    handleCards(player, &deck->getCards()[y1-1][x1-1], &deck->getCards()[x2-1][y2-1]);
+    handleCards(player, &deck->getCards()[x1-1][y1-1], &deck->getCards()[x2-1][y2-1]);
     if (allCardsFlipped()) {
         EndGame();
     } else {
@@ -376,7 +370,8 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
         if (card1->getNumber() == card2->getNumber()) {
             card1->setNumber(-1);
             card2->setNumber(-1);
-        } else if(card1->getNumber() != card2->getNumber())
+            player->setScore(player->getScore() + 1);
+        } else
         {
             card1->hide();
             card2->hide();
@@ -450,7 +445,10 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
         card2->setNumber(-1);
     }
 
-    player->displayScore();
+    if(player == player1)
+    player2->displayScore();
+    else 
+    player1->displayScore();
 }
 Deck* Game::getDeck(){
     return deck;
