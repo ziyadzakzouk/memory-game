@@ -29,6 +29,7 @@ public:
     void handleBounsCard(Player* player,Card* card1,Card* card2); //handles the bonus card
     void revealAllCards();
 
+
 };
 
 
