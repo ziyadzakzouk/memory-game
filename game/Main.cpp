@@ -330,7 +330,7 @@ void Game::PlayerTurn(Player *player) {
             cout << "Coordinates out of bounds. Please enter valid coordinates." << endl;
         } else if (deck->getCards()[x1-1][y1-1].isFlipped()) {
             cout << "Card already flipped. Choose another card." << endl;
-            deck->displayGrid()[x1-1][y1-1].hide();
+            deck->getCards()[x1-1][y1-1].hide();
         }
         cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
         cin >> x1 >> y1;
