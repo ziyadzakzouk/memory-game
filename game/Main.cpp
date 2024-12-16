@@ -295,7 +295,7 @@ void Game::initializeGame(){
     cout << "Player 1: " << player1->getName() << "-----------------VS------------------" << "Player 2: " << player2->getName() << endl;
     player1->displayScore(); cout<< "___________________________________________________" ; player2->displayScore();
     cout<<endl;
-    PlayerTurn(player1); 
+    PlayerTurn(player1,true); 
 
 }
 
@@ -311,16 +311,17 @@ void Game::setPlayer2(Player* player){
     this->player2 = player2;
 }
 bool Game::allCardsFlipped() {
+    int count = 0;
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            if (deck->getCards()[i][j].isFlipped()== false) {
-                return false;
+            if (deck->getCards()[i][j].isFlipped()== true) {
+                count++;
             }
         }
     }
-    return true;
+    return count >= 15;
 }
-void Game::PlayerTurn(Player *player) {
+void Game::PlayerTurn(Player *player,bool flag) { //true
     int x1, y1, x2, y2;
     // First card selection
     cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
@@ -351,15 +352,17 @@ void Game::PlayerTurn(Player *player) {
     }
     deck->getCards()[x2-1][y2-1].reveal();  // reveal the card
     deck->displayGrid();
-
     handleCards(player, &deck->getCards()[x1-1][y1-1], &deck->getCards()[x2-1][y2-1]);
+    
     if (allCardsFlipped()) {
         EndGame();
     } else {
-        if (player == player1) {
-            PlayerTurn(player2);
-        } else {
-            PlayerTurn(player1);
+        if (player == player1 && flag) {
+        
+            PlayerTurn(player2,false);
+        } else if (player == player2 && !flag) {
+            
+            PlayerTurn(player1,true);
         }
     }
 }
@@ -387,17 +390,25 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
         cin >> tmp;
 
         if (tmp == 1) {
+            cout << "Cards match! Adding 2 point to " << player->getName() << endl;
+            card1->setNumber(-1);
+            card2->setNumber(-1);
             player->setScore(player->getScore() + 2);
+            cout << "Updated score: " << player->getScore() << endl;
         } else {
+            
             player->setScore(player->getScore() + 1);
             if (player == player1) {
-                PlayerTurn(player1);
+                card1->setNumber(-1);
+                card2->setNumber(-1);
+                PlayerTurn(player1,true);
             } else {
-                PlayerTurn(player2);
+                card1->setNumber(-1);
+                card2->setNumber(-1);
+                PlayerTurn(player2,false);
             }
         }
-        card1->setNumber(-1);
-        card2->setNumber(-1);
+        
     }
 
     // Handle penalty cards
@@ -408,13 +419,19 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
         cout << "2- Lose 1 point and skip the next turn\n";
         cin >> tmp;
         if (tmp == 1) {
+            card1->setNumber(-1);
+             card2->setNumber(-1);
             player->setScore(player->getScore() - 2);
         } else {
             player->setScore(player->getScore() - 1);
             if (player == player1) {
-                PlayerTurn(player2);
+                 card1->setNumber(-1);
+                card2->setNumber(-1);
+                PlayerTurn(player2,true);
             } else {
-                PlayerTurn(player1);
+                 card1->setNumber(-1);
+                 card2->setNumber(-1);
+                PlayerTurn(player1,false);
             }
         }
         card1->setNumber(-1);
@@ -447,7 +464,7 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
 
     if(player == player1)
     player2->displayScore();
-    else 
+    else if(player == player2)
     player1->displayScore();
 }
 Deck* Game::getDeck(){
