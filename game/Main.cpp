@@ -321,7 +321,7 @@ bool Game::allCardsFlipped() {
     }
     return count >= 15;
 }
-void Game::PlayerTurn(Player *player,bool flag) { //true
+void Game::PlayerTurn(Player *player,bool flag) { 
     int x1, y1, x2, y2;
     // First card selection
     cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
@@ -331,7 +331,7 @@ void Game::PlayerTurn(Player *player,bool flag) { //true
             cout << "Coordinates out of bounds. Please enter valid coordinates." << endl;
         } else if (deck->getCards()[x1-1][y1-1].isFlipped()) {
             cout << "Card already flipped. Choose another card." << endl;
-            deck->getCards()[x1-1][y1-1].hide();
+            
         }
         cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
         cin >> x1 >> y1;
@@ -347,7 +347,7 @@ void Game::PlayerTurn(Player *player,bool flag) { //true
             cout << "Coordinates out of bounds. Please enter valid coordinates." << endl;
         } else if (deck->getCards()[x2-1][y2-1].isFlipped()) {
             cout << "Card already flipped. Choose another card." << endl;
-            deck->getCards()[x1-1][y1-1].hide();
+            
         }
         cout << player->getName() << "'s turn. Enter coordinates of the second card (row (X) and column (Y) ): ";
         cin >> x2 >> y2;
@@ -378,8 +378,10 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
             card2->setNumber(-1);
             player->setScore(player->getScore() + 1);
             if (player == player1) {
+                
                 PlayerTurn(player1,true);
             } else {
+                
                 PlayerTurn(player2,false);
             }
         } else
@@ -497,9 +499,10 @@ void Game::EndGame() {
         cout << "Score: " << player2->getScore() << " Loser Score: " << player1->getScore() << endl;
     }
     else {
-        cout << "It's a tie!\n";
+        cout << "It's a tie!\n"<<endl;
     }
-    terminate();
+    cout << "thank you for playing" << std::endl;
+    exit(0);
 }
 
 int main() {
