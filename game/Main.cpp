@@ -33,11 +33,11 @@ Card::~Card(){
 
 void Card::display(){
     if(flipped){
-    cout<<number<<"";
+    cout<<number<<" ";
 
     }
     else
-    cout<<"*";
+    cout<<"* ";
 
 }
 
@@ -352,11 +352,12 @@ void Game::PlayerTurn(Player *player,bool flag) { //true
     }
     deck->getCards()[x2-1][y2-1].reveal();  // reveal the card
     deck->displayGrid();
-    handleCards(player, &deck->getCards()[x1-1][y1-1], &deck->getCards()[x2-1][y2-1]);
-    
     if (allCardsFlipped()) {
         EndGame();
-    } else {
+    }
+    handleCards(player, &deck->getCards()[x1-1][y1-1], &deck->getCards()[x2-1][y2-1]);
+    
+    
         if (player == player1 && flag) {
         
             PlayerTurn(player2,false);
@@ -364,7 +365,7 @@ void Game::PlayerTurn(Player *player,bool flag) { //true
             
             PlayerTurn(player1,true);
         }
-    }
+    
 }
 
 void Game::handleCards(Player* player, Card* card1, Card* card2) {
@@ -374,6 +375,11 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
             card1->setNumber(-1);
             card2->setNumber(-1);
             player->setScore(player->getScore() + 1);
+            if (player == player1) {
+                PlayerTurn(player1,true);
+            } else {
+                PlayerTurn(player2,false);
+            }
         } else
         {
             card1->hide();
@@ -486,11 +492,12 @@ void Game::EndGame() {
     }
     else if (player1->getScore() < player2->getScore()) {
         cout << "Winner: " << player2->getName() << endl;
-        cout << "Score: " << player2->getScore() << "Loser Score: " << player1->getScore() << endl;
+        cout << "Score: " << player2->getScore() << " Loser Score: " << player1->getScore() << endl;
     }
     else {
         cout << "It's a tie!\n";
     }
+    terminate();
 }
 
 int main() {
