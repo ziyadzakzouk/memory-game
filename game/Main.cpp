@@ -11,7 +11,8 @@
 #include <algorithm>
 #include <string>
 #include <thread>
-
+//#include <SFML/Graphics.hpp>
+//#include <SFML/Window.hpp>
 using namespace std;
 
 Card::Card(){
@@ -330,7 +331,7 @@ void Game::PlayerTurn(Player *player,bool flag) {
     }
     int x1, y1, x2, y2;
     // First card selection
-    cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
+    cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): "; //add player scoreXXXX
     cin >> x1 >> y1;
     while (x1 < 1 || x1 > 4 || y1 < 1 || y1 > 4 || deck->getCards()[x1-1][y1-1].isFlipped()) {
         if (x1 < 1 || x1 > 4 || y1 < 1 || y1 > 4) {
@@ -419,10 +420,14 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
             if (player == player1) {
                 card1->setNumber(-1);
                 card2->setNumber(-1);
+                if (allCardsFlipped())
+                EndGame();
                 PlayerTurn(player1,true);
             } else {
                 card1->setNumber(-1);
                 card2->setNumber(-1);
+                if (allCardsFlipped())
+                EndGame();
                 PlayerTurn(player2,false);
             }
         }
@@ -450,10 +455,12 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
             }
             else {
             if (player == player1) {
-                 
+                 if(allCardsFlipped())
+                EndGame();
                 PlayerTurn(player2,true);
             } else {
-                
+                if (allCardsFlipped())
+                EndGame();
                 PlayerTurn(player1,false);
             }
         }
