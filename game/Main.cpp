@@ -312,16 +312,22 @@ void Game::setPlayer2(Player* player){
 }
 bool Game::allCardsFlipped() {
     int count = 0;
+    int specialcount = 0;
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             if (deck->getCards()[i][j].isFlipped()== true) {
                 count++;
             }
+            if(deck->getCards()[i][j].getNumber()==7 || deck->getCards()[i][j].getNumber()== 8)
+            specialcount++;
         }
     }
-    return count >= 15;
+    return count >= 15 && specialcount <= 0;
 }
 void Game::PlayerTurn(Player *player,bool flag) { 
+    if (allCardsFlipped()) {
+        EndGame();
+    }
     int x1, y1, x2, y2;
     // First card selection
     cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
@@ -352,22 +358,23 @@ void Game::PlayerTurn(Player *player,bool flag) {
         cout << player->getName() << "'s turn. Enter coordinates of the second card (row (X) and column (Y) ): ";
         cin >> x2 >> y2;
     }
+    
     deck->getCards()[x2-1][y2-1].reveal();  // reveal the card
     deck->displayGrid();
-    if (allCardsFlipped()) {
-        EndGame();
-    }
+    
+
     handleCards(player, &deck->getCards()[x1-1][y1-1], &deck->getCards()[x2-1][y2-1]);
     
     
-        if (player == player1 && flag) {
+    
+       if (player == player1 && flag) {
         
             PlayerTurn(player2,false);
         } else if (player == player2 && !flag) {
             
             PlayerTurn(player1,true);
         }
-    
+       
 }
 
 void Game::handleCards(Player* player, Card* card1, Card* card2) {
@@ -408,6 +415,7 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
         } else {
             
             player->setScore(player->getScore() + 1);
+            
             if (player == player1) {
                 card1->setNumber(-1);
                 card2->setNumber(-1);
@@ -429,20 +437,26 @@ void Game::handleCards(Player* player, Card* card1, Card* card2) {
         cout << "2- Lose 1 point and skip the next turn\n";
         cin >> tmp;
         if (tmp == 1) {
-            card1->setNumber(-1);
-             card2->setNumber(-1);
+            
             player->setScore(player->getScore() - 2);
+            if(allCardsFlipped()){
+                EndGame();
+            }
         } else {
+
             player->setScore(player->getScore() - 1);
+            if(allCardsFlipped()){
+                EndGame();
+            }
+            else {
             if (player == player1) {
-                 card1->setNumber(-1);
-                card2->setNumber(-1);
+                 
                 PlayerTurn(player2,true);
             } else {
-                 card1->setNumber(-1);
-                 card2->setNumber(-1);
+                
                 PlayerTurn(player1,false);
             }
+        }
         }
         card1->setNumber(-1);
         card2->setNumber(-1);
