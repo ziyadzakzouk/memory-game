@@ -331,7 +331,7 @@ void Game::PlayerTurn(Player *player,bool flag) {
     }
     int x1, y1, x2, y2;
     // First card selection
-    cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): "; //add player scoreXXXX
+    cout << "score : "<< player->getScore()<<" "<< player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): "; //add player scoreXXXX
     cin >> x1 >> y1;
     while (x1 < 1 || x1 > 4 || y1 < 1 || y1 > 4 || deck->getCards()[x1-1][y1-1].isFlipped()) {
         if (x1 < 1 || x1 > 4 || y1 < 1 || y1 > 4) {
@@ -340,14 +340,14 @@ void Game::PlayerTurn(Player *player,bool flag) {
             cout << "Card already flipped. Choose another card." << endl;
             
         }
-        cout << player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
+        cout << "score : "<< player->getScore()<<" "<< player->getName() << "'s turn. Enter coordinates of the first card (row (X) and column (Y) ): ";
         cin >> x1 >> y1;
     }
     deck->getCards()[x1-1][y1-1].reveal();  // reveal the card
     deck->displayGrid();
 
     // Second card selection
-    cout << player->getName() << "'s turn. Enter coordinates of the second card (row (X) and column (Y) ): ";
+    cout << "score : "<< player->getScore()<<" "<<player->getName() << "'s turn. Enter coordinates of the second card (row (X) and column (Y) ): ";
     cin >> x2 >> y2;
     while (x2 < 1 || x2 > 4 || y2 < 1 || y2 > 4 || deck->getCards()[x2-1][y2-1].isFlipped()) {
         if (x2 < 1 || x2 > 4 || y2 < 1 || y2 > 4) {
@@ -356,7 +356,7 @@ void Game::PlayerTurn(Player *player,bool flag) {
             cout << "Card already flipped. Choose another card." << endl;
             
         }
-        cout << player->getName() << "'s turn. Enter coordinates of the second card (row (X) and column (Y) ): ";
+        cout << "score : "<< player->getScore()<<" "<<player->getName() << "'s turn. Enter coordinates of the second card (row (X) and column (Y) ): ";
         cin >> x2 >> y2;
     }
     
