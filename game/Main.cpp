@@ -11,8 +11,9 @@
 #include <algorithm>
 #include <string>
 #include <thread>
-//#include <SFML/Graphics.hpp>
-//#include <SFML/Window.hpp>
+#include "GameGUI.h"
+#include<SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 using namespace std;
 
 Card::Card(){
@@ -526,9 +527,30 @@ void Game::EndGame() {
     exit(0);
 }
 
+
+
+
+
+
 int main() {
     Game game;
     game.initializeGame();
+
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Memory Game");
+    GameGUI gameGUI(&game, 50, 100);
+
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
+
+        window.clear();
+        gameGUI.draw(window);
+        window.display();
+    }
 
     return 0;
 }
